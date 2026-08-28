@@ -1,0 +1,112 @@
+import axios from 'axios';
+import type {
+  BulkVerificationResult,
+  Credential,
+  Institution,
+  ShareLink,
+  User,
+  VerificationResult
+} from './types';
+
+export const TOKEN_STORAGE_KEY = 'univerify.token';
+
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:3000/api'
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export function apiErrorMessage(error: unknown, fallback = 'Something went wrong'): string {
+  if (axios.isAxiosError(error)) {
+    return error.response?.data?.error?.message ?? error.response?.data?.message ?? error.message;
+  }
+  return fallback;
+}
+
+export interface LoginResponse {
+  token?: string;
+  user?: User;
+  mfaRequired?: boolean;
+}
+
+export const authApi = {
+  async login(email: string, password: string, mfaToken?: string) {
+    const { data } = await api.post<LoginResponse>('/auth/login', { email, password, mfaToken });
+    return data;
+  },
+  async me() {
+    const { data } = await api.get<{ user: User }>('/auth/me');
+    return data.user;
+  }
+};
+
+export const verifyApi = {
+  async byHash(hash: string) {
+    const { data } = await api.get<VerificationResult>(`/verify/${hash}`);
+    return data;
+  },
+  async byFile(file: File) {
+    const form = new FormData();
+    form.append('certificateFile', file);
+    const { data } = await api.post<VerificationResult>('/verify/file', form);
+    return data;
+  },
+  async bulk(files: File[]) {
+    const form = new FormData();
+    files.forEach((file) => form.append('certificateFiles', file));
+    const { data } = await api.post<{ count: number; results: BulkVerificationResult[] }>('/verify/bulk', form);
+    return data.results;
+  },
+  certificateUrl(hash: string) {
+    return `${api.defaults.baseURL}/verify/${hash}/certificate`;
+  }
+};
+
+export interface IssueCredentialInput {
+  studentName: string;
+  studentId: string;
+  degree: string;
+  graduationDate: string;
+  program?: string;
+  honors?: string;
+}
+
+export const adminApi = {
+  async listCredentials(search?: string) {
+    const { data } = await api.get<{ total: number; credentials: Credential[] }>('/admin/credentials', {
+      params: search ? { search } : undefined
+    });
+    return data.credentials;
+  },
+  async issueCredential(input: IssueCredentialInput) {
+    const { data } = await api.post<{ credential: Credential }>('/admin/credentials', input);
+    return data.credential;
+  },
+  async revokeCredential(hash: string, reason: string) {
+    const { data } = await api.post<{ credential: Credential }>(`/admin/credentials/${hash}/revoke`, { reason });
+    return data.credential;
+  },
+  async listInstitutions() {
+    const { data } = await api.get<{ institutions: Institution[] }>('/admin/institutions');
+    return data.institutions;
+  }
+};
+
+export const graduateApi = {
+  async listCredentials() {
+    const { data } = await api.get<{ credentials: Credential[] }>('/graduate/credentials');
+    return data.credentials;
+  },
+  async shareLink(hash: string) {
+    const { data } = await api.get<ShareLink>(`/graduate/credentials/${hash}/share`);
+    return data;
+  }
+};
+
+export default api;
