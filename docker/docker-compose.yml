@@ -1,0 +1,94 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: univerify
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  besu-node:
+    image: hyperledger/besu:23.10.0
+    # The named volume is created root-owned; besu needs write access to its data path.
+    user: root
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+    volumes:
+      - besu_data:/var/lib/besu
+    command: >
+      --network=dev
+      --rpc-http-enabled
+      --rpc-http-api=ETH,NET,WEB3
+      --host-allowlist=*
+      --rpc-http-cors-origins=*
+      --rpc-http-host=0.0.0.0
+      --rpc-http-port=8545
+      --min-gas-price=0
+      --max-peers=0
+      --miner-enabled
+      --miner-coinbase=0xfe3b557e8fb62b89f4916b721be55ceb828dbd73
+      --data-path=/var/lib/besu
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -X POST -H 'Content-Type: application/json' --data '{\"jsonrpc\":\"2.0\",\"method\":\"net_version\",\"params\":[],\"id\":1}' http://localhost:8545"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/univerify
+      REDIS_URL: redis://redis:6379
+      BLOCKCHAIN_NODE_URL: http://besu-node:8545
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../backend:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      besu-node:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "3001:80"
+    environment:
+      REACT_APP_API_URL: http://localhost:3000/api
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:
+  besu_data:
