@@ -1,0 +1,21 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# builds
+build/
+dist/
+coverage/
+
+# hardhat
+artifacts/
+cache/
+types/
+ignition/deployments/
+
+# logs
+*.log
+npm-debug.log*
+
+.DS_Store
