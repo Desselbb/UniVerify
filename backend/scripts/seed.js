@@ -2,7 +2,32 @@ require('dotenv').config();
 
 const { sequelize, Institution, User, Credential } = require('../src/models');
 const { hashCredentialData } = require('../src/services/hashService');
+const { connectBlockchain } = require('../src/config/blockchain');
+const blockchain = require('../src/services/blockchainService');
 const { logger } = require('../src/utils/logger');
+
+async function anchor(institution, credential) {
+  await connectBlockchain();
+
+  if (!institution.onChainId) {
+    const onChainId = await blockchain.registerInstitution({
+      name: institution.name,
+      registrationCode: institution.registrationCode
+    });
+    await institution.update({ onChainId });
+  }
+
+  if (credential.blockchainTxHash) {
+    return;
+  }
+
+  const { txHash, blockNumber } = await blockchain.issueCredential({
+    hash: credential.hash,
+    institutionId: institution.onChainId
+  });
+
+  await credential.update({ blockchainTxHash: txHash, blockNumber, blockTimestamp: new Date() });
+}
 
 async function seed() {
   await sequelize.sync({ alter: true });
@@ -11,8 +36,7 @@ async function seed() {
     where: { registrationCode: 'UNI-001' },
     defaults: {
       name: 'Example University',
-      contactEmail: 'registrar@example.edu',
-      onChainId: 1
+      contactEmail: 'registrar@example.edu'
     }
   });
 
@@ -46,7 +70,7 @@ async function seed() {
     institutionId: institution.id
   };
 
-  await Credential.findOrCreate({
+  const [credential] = await Credential.findOrCreate({
     where: { hash: hashCredentialData(credentialData) },
     defaults: {
       ...credentialData,
@@ -57,6 +81,12 @@ async function seed() {
       issuerId: admin.id
     }
   });
+
+  try {
+    await anchor(institution, credential);
+  } catch (error) {
+    logger.warn('Could not anchor seed credential on chain', { error: error.message });
+  }
 
   logger.info('Seed data created');
   await sequelize.close();
