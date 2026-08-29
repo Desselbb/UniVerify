@@ -1,11 +1,14 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { authApi, TOKEN_STORAGE_KEY } from '../api/client';
+import type { RegisterInput } from '../api/client';
 import type { User } from '../api/types';
 
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string, mfaToken?: string) => Promise<{ mfaRequired: boolean }>;
+  register: (input: RegisterInput) => Promise<void>;
+  refreshUser: () => Promise<void>;
   logout: () => void;
 }
 
@@ -39,12 +42,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { mfaRequired: false };
   }, []);
 
+  const register = useCallback(async (input: RegisterInput) => {
+    const data = await authApi.register(input);
+    localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
+    setUser(data.user);
+  }, []);
+
+  const refreshUser = useCallback(async () => {
+    setUser(await authApi.me());
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
     setUser(null);
   }, []);
 
-  const value = useMemo(() => ({ user, loading, login, logout }), [user, loading, login, logout]);
+  const value = useMemo(
+    () => ({ user, loading, login, register, refreshUser, logout }),
+    [user, loading, login, register, refreshUser, logout]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

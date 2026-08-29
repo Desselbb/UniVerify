@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { Alert, Box, Button, Link, Paper, Stack, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Link,
+  MenuItem,
+  Paper,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material';
 import { apiErrorMessage } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
 
-export default function LoginPage() {
-  const { login } = useAuth();
+type RegisterRole = 'graduate' | 'university_admin';
+
+export default function RegisterPage() {
+  const { register } = useAuth();
   const navigate = useNavigate();
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [mfaToken, setMfaToken] = useState('');
-  const [mfaRequired, setMfaRequired] = useState(false);
+  const [role, setRole] = useState<RegisterRole>('graduate');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -19,14 +31,10 @@ export default function LoginPage() {
     setSubmitting(true);
     setError(null);
     try {
-      const result = await login(email, password, mfaToken || undefined);
-      if (result.mfaRequired) {
-        setMfaRequired(true);
-        return;
-      }
-      navigate('/');
+      await register({ fullName, email, password, role });
+      navigate(role === 'graduate' ? '/graduate' : '/admin');
     } catch (err) {
-      setError(apiErrorMessage(err, 'Login failed'));
+      setError(apiErrorMessage(err, 'Registration failed'));
     } finally {
       setSubmitting(false);
     }
@@ -36,9 +44,16 @@ export default function LoginPage() {
     <Box sx={{ maxWidth: 420, mx: 'auto' }}>
       <Paper sx={{ p: 4 }}>
         <Typography variant="h5" gutterBottom>
-          Sign in
+          Create an account
         </Typography>
         <Stack component="form" spacing={2} onSubmit={handleSubmit}>
+          <TextField
+            label="Full name"
+            value={fullName}
+            onChange={(event) => setFullName(event.target.value)}
+            helperText="Graduates: use the name printed on your certificate"
+            required
+          />
           <TextField
             label="Email"
             type="email"
@@ -51,29 +66,26 @@ export default function LoginPage() {
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            slotProps={{ htmlInput: { minLength: 8 } }}
+            helperText="At least 8 characters"
             required
           />
-          {mfaRequired && (
-            <TextField
-              label="Authentication code"
-              value={mfaToken}
-              onChange={(event) => setMfaToken(event.target.value)}
-              helperText="Enter the 6-digit code from your authenticator app"
-              required
-            />
-          )}
+          <TextField
+            select
+            label="Account type"
+            value={role}
+            onChange={(event) => setRole(event.target.value as RegisterRole)}
+          >
+            <MenuItem value="graduate">Graduate</MenuItem>
+            <MenuItem value="university_admin">University administrator</MenuItem>
+          </TextField>
           {error && <Alert severity="error">{error}</Alert>}
           <Button type="submit" variant="contained" disabled={submitting}>
-            Sign in
+            Create account
           </Button>
-          <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-between' }}>
-            <Link component={RouterLink} to="/forgot-password" variant="body2">
-              Forgot password?
-            </Link>
-            <Link component={RouterLink} to="/register" variant="body2">
-              Create an account
-            </Link>
-          </Stack>
+          <Link component={RouterLink} to="/login" variant="body2">
+            Already have an account? Sign in
+          </Link>
         </Stack>
       </Paper>
     </Box>

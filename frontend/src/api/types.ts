@@ -14,7 +14,27 @@ export interface Institution {
   id: number;
   name: string;
   registrationCode: string;
+  contactEmail?: string | null;
   isActive: boolean;
+  onChainId?: number | null;
+}
+
+export interface AuditLogEntry {
+  id: number;
+  userId: number | null;
+  action: string;
+  entityType: string | null;
+  entityId: string | null;
+  ipAddress: string | null;
+  metadata: Record<string, unknown> | null;
+  createdAt: string;
+}
+
+export interface MfaSetup {
+  secret: string;
+  otpauthUrl: string;
+  qrCodeDataUrl: string;
+  backupCodes: string[];
 }
 
 export interface Credential {

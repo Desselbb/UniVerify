@@ -32,6 +32,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               Admin
             </Button>
           )}
+          {user && (
+            <Button color="inherit" component={RouterLink} to="/account">
+              Account
+            </Button>
+          )}
           {user ? (
             <Button
               color="inherit"
@@ -43,9 +48,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               Sign out ({user.fullName})
             </Button>
           ) : (
-            <Button color="inherit" component={RouterLink} to="/login">
-              Sign in
-            </Button>
+            <>
+              <Button color="inherit" component={RouterLink} to="/login">
+                Sign in
+              </Button>
+              <Button color="inherit" component={RouterLink} to="/register">
+                Register
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>

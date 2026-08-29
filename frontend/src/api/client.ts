@@ -1,8 +1,11 @@
 import axios from 'axios';
 import type {
+  AuditLogEntry,
   BulkVerificationResult,
   Credential,
   Institution,
+  MfaSetup,
+  Role,
   ShareLink,
   User,
   VerificationResult
@@ -35,10 +38,45 @@ export interface LoginResponse {
   mfaRequired?: boolean;
 }
 
+export interface RegisterInput {
+  email: string;
+  password: string;
+  fullName: string;
+  role: Extract<Role, 'graduate' | 'university_admin'>;
+  institutionId?: number;
+}
+
 export const authApi = {
   async login(email: string, password: string, mfaToken?: string) {
     const { data } = await api.post<LoginResponse>('/auth/login', { email, password, mfaToken });
     return data;
+  },
+  async register(input: RegisterInput) {
+    const { data } = await api.post<{ token: string; user: User }>('/auth/register', input);
+    return data;
+  },
+  async requestPasswordReset(email: string) {
+    const { data } = await api.post<{ message: string }>('/auth/password/reset', { email });
+    return data.message;
+  },
+  async resetPassword(token: string, password: string) {
+    const { data } = await api.post<{ message: string }>(`/auth/password/reset/${token}`, {
+      password,
+      confirmPassword: password
+    });
+    return data.message;
+  },
+  async setupMFA() {
+    const { data } = await api.post<MfaSetup>('/auth/mfa/setup');
+    return data;
+  },
+  async verifyMFA(token: string) {
+    const { data } = await api.post<{ message: string }>('/auth/mfa/verify', { token });
+    return data.message;
+  },
+  async updateProfile(input: { fullName?: string; email?: string }) {
+    const { data } = await api.put<{ user: User }>('/auth/me', input);
+    return data.user;
   },
   async me() {
     const { data } = await api.get<{ user: User }>('/auth/me');
@@ -95,6 +133,18 @@ export const adminApi = {
   async listInstitutions() {
     const { data } = await api.get<{ institutions: Institution[] }>('/admin/institutions');
     return data.institutions;
+  },
+  async createInstitution(input: { name: string; registrationCode: string; contactEmail?: string }) {
+    const { data } = await api.post<{ institution: Institution }>('/admin/institutions', input);
+    return data.institution;
+  },
+  async listUsers() {
+    const { data } = await api.get<{ users: User[] }>('/admin/users');
+    return data.users;
+  },
+  async listAuditLogs(pageSize = 50) {
+    const { data } = await api.get<{ logs: AuditLogEntry[] }>('/admin/audit-logs', { params: { pageSize } });
+    return data.logs;
   }
 };
 
