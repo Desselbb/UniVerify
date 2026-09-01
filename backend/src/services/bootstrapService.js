@@ -90,9 +90,18 @@ async function syncOnChainState() {
   logger.info('On-chain state synchronised');
 }
 
+async function needsBootstrap() {
+  const address = getContractAddress();
+  if (!address || address === ZERO_ADDRESS) {
+    return true;
+  }
+  const code = await getWeb3().eth.getCode(address);
+  return !code || code === '0x';
+}
+
 async function bootstrap() {
   await ensureContract();
   await syncOnChainState();
 }
 
-module.exports = { bootstrap, ensureContract, syncOnChainState };
+module.exports = { bootstrap, ensureContract, syncOnChainState, needsBootstrap };

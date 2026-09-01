@@ -14,7 +14,8 @@ module.exports = [
         require: 'readonly',
         __dirname: 'readonly',
         Buffer: 'readonly',
-        setTimeout: 'readonly'
+        setTimeout: 'readonly',
+        setInterval: 'readonly'
       }
     },
     rules: {
