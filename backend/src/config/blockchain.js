@@ -3,12 +3,13 @@ const abi = require('./CredentialRegistry.abi.json');
 const { logger } = require('../utils/logger');
 
 const NODE_URL = process.env.BLOCKCHAIN_NODE_URL || 'http://localhost:8545';
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 const PRIVATE_KEY = process.env.BLOCKCHAIN_PRIVATE_KEY;
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 let web3 = null;
 let contract = null;
 let account = null;
+let contractAddress = process.env.CONTRACT_ADDRESS;
 
 async function connectBlockchain() {
   web3 = new Web3(NODE_URL);
@@ -22,8 +23,8 @@ async function connectBlockchain() {
     web3.eth.defaultAccount = account.address;
   }
 
-  if (CONTRACT_ADDRESS && CONTRACT_ADDRESS !== '0x0000000000000000000000000000000000000000') {
-    contract = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
+  if (contractAddress && contractAddress !== ZERO_ADDRESS) {
+    contract = new web3.eth.Contract(abi, contractAddress);
   } else {
     logger.warn('CONTRACT_ADDRESS is not configured; on-chain calls are disabled');
   }
@@ -52,4 +53,22 @@ function getAccount() {
   return account;
 }
 
-module.exports = { connectBlockchain, getWeb3, getContract, getAccount, abi };
+function setContractAddress(address) {
+  contractAddress = address;
+  contract = new (getWeb3().eth.Contract)(abi, address);
+  return contract;
+}
+
+function getContractAddress() {
+  return contractAddress;
+}
+
+module.exports = {
+  connectBlockchain,
+  getWeb3,
+  getContract,
+  getAccount,
+  setContractAddress,
+  getContractAddress,
+  abi
+};

@@ -45,6 +45,28 @@ async function issueCredential({ hash, institutionId, metadataUri = '' }) {
   };
 }
 
+async function getInstitution(onChainId) {
+  const result = await getContract().methods.institutions(onChainId).call();
+
+  return {
+    name: result.name,
+    registrationCode: result.registrationCode,
+    admin: result.admin,
+    isActive: Boolean(result.isActive)
+  };
+}
+
+// The contract binds an issuer to a single institution, so the backend account has to be
+// re-pointed before issuing for a different one.
+async function authorizeIssuerFor(onChainId) {
+  const contract = getContract();
+  const account = getAccount();
+
+  await contract.methods
+    .authorizeIssuer(account.address, onChainId)
+    .send({ from: account.address, gas: 300000, gasPrice: '0' });
+}
+
 async function verifyCredential(hash) {
   const contract = getContract();
   const result = await contract.methods.verifyCredential(hash).call();
@@ -70,4 +92,11 @@ async function revokeCredential(hash, reason) {
   return { txHash: receipt.transactionHash, blockNumber: Number(receipt.blockNumber) };
 }
 
-module.exports = { registerInstitution, issueCredential, verifyCredential, revokeCredential };
+module.exports = {
+  registerInstitution,
+  issueCredential,
+  verifyCredential,
+  revokeCredential,
+  getInstitution,
+  authorizeIssuerFor
+};
