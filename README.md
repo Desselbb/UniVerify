@@ -82,3 +82,18 @@ cd blockchain && npx hardhat compile
 `docker compose up -d` also builds and runs the backend and frontend images (frontend served by nginx on
 http://localhost:3001). Use it only when you are not running the local dev servers — they bind the same
 ports. The containerised backend needs `CONTRACT_ADDRESS` supplied through the compose environment.
+
+## Hosted deployment (Render free tier)
+
+- Frontend: https://univerify-web.onrender.com (static site, `frontend/`)
+- API: https://univerify-api.onrender.com/api (web service, `backend/`)
+- Database: Render PostgreSQL, reachable only from Render's internal network
+
+The free plan has no persistent disk and stops idle instances, so the API service bundles its own
+chain node: `render-build.sh` installs `anvil` and `render-start.sh` runs it on `127.0.0.1:8545`
+next to the API. With `AUTO_BOOTSTRAP=true` the backend syncs the schema, seeds demo data,
+deploys `CredentialRegistry` and re-anchors every stored credential on boot, and a background
+reconciler redeploys the registry if the chain is ever reset while the API keeps running.
+
+First request after an idle period takes ~1 minute while Render restarts the instance and the
+chain is rebuilt.
