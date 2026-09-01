@@ -14,6 +14,8 @@ const healthRoutes = require('./routes/health');
 
 const app = express();
 
+app.set('trust proxy', parseInt(process.env.TRUST_PROXY, 10) || 0);
+
 // Security middleware
 app.use(helmet());
 app.use(cors({
