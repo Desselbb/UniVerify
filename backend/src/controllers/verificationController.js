@@ -2,6 +2,7 @@ const PDFDocument = require('pdfkit');
 const { Credential, Institution, VerificationRequest } = require('../models');
 const { hashFileBuffer, isValidHash } = require('../services/hashService');
 const blockchain = require('../services/blockchainService');
+const { resolveStatus } = require('../services/verificationPolicy');
 const { ApiError } = require('../middleware/errorHandler');
 const { logger } = require('../utils/logger');
 
@@ -18,9 +19,18 @@ async function resolve(hash, { method, req }) {
     logger.warn('On-chain lookup unavailable', { hash, error: error.message });
   }
 
-  const exists = Boolean(credential) || Boolean(onChain?.exists);
-  const revoked = Boolean(credential?.isRevoked) || Boolean(onChain?.revoked);
-  const result = !exists ? 'not_found' : revoked ? 'revoked' : 'valid';
+  const { status: result, anchor } = resolveStatus({
+    credential,
+    onChain,
+    onChainInstitutionId: credential?.institution?.onChainId ?? null
+  });
+
+  if (anchor.unregisteredAnchor) {
+    logger.warn('On-chain anchor without an issuing record', { hash });
+  }
+  if (anchor.institutionMismatch) {
+    logger.warn('On-chain anchor belongs to a different institution', { hash });
+  }
 
   await VerificationRequest.create({
     hash,
@@ -29,13 +39,14 @@ async function resolve(hash, { method, req }) {
     result,
     requesterIp: req.ip,
     userAgent: req.get('user-agent'),
-    details: onChain
+    details: { onChain, anchor }
   });
 
   return {
     hash,
     status: result,
     onChain,
+    anchor,
     credential: credential
       ? {
           studentName: credential.studentName,

@@ -26,7 +26,9 @@ contract CredentialRegistry {
     mapping(uint256 => Institution) public institutions;
     mapping(address => bool) public authorizedIssuers;
     mapping(address => uint256) public issuerInstitution;
+    mapping(address => bool) public registrars;
 
+    address public owner;
     uint256 public institutionCounter;
     uint256 public credentialCounter;
 
@@ -58,8 +60,29 @@ contract CredentialRegistry {
         uint256 timestamp
     );
 
+    event RegistrarUpdated(address indexed registrar, bool allowed);
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    constructor() {
+        owner = msg.sender;
+        registrars[msg.sender] = true;
+        emit OwnershipTransferred(address(0), msg.sender);
+        emit RegistrarUpdated(msg.sender, true);
+    }
+
     modifier onlyAuthorizedIssuer() {
         require(authorizedIssuers[msg.sender], "Not authorized issuer");
+        _;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+
+    modifier onlyRegistrar() {
+        require(registrars[msg.sender], "Not authorized registrar");
         _;
     }
 
@@ -169,9 +192,11 @@ contract CredentialRegistry {
         address _admin
     )
         external
+        onlyRegistrar
         returns (uint256 institutionId)
     {
         require(bytes(_name).length > 0, "Name required");
+        require(_admin != address(0), "Admin required");
         require(bytes(_registrationCode).length > 0, "Registration code required");
 
         institutionCounter++;
@@ -208,6 +233,26 @@ contract CredentialRegistry {
     {
         authorizedIssuers[_issuer] = false;
         issuerInstitution[_issuer] = 0;
+        return true;
+    }
+
+    function setRegistrar(address _registrar, bool _allowed)
+        external
+        onlyOwner
+        returns (bool)
+    {
+        require(_registrar != address(0), "Registrar required");
+        registrars[_registrar] = _allowed;
+
+        emit RegistrarUpdated(_registrar, _allowed);
+        return true;
+    }
+
+    function transferOwnership(address _newOwner) external onlyOwner returns (bool) {
+        require(_newOwner != address(0), "Owner required");
+
+        emit OwnershipTransferred(owner, _newOwner);
+        owner = _newOwner;
         return true;
     }
 }
