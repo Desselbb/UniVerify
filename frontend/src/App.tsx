@@ -52,8 +52,9 @@ export default function App() {
                   </RequireRole>
                 }
               />
+              <Route path="/admin" element={<Navigate to="/admin/credentials" replace />} />
               <Route
-                path="/admin"
+                path="/admin/:section"
                 element={
                   <RequireRole roles={['university_admin', 'system_admin']}>
                     <AdminPage />
