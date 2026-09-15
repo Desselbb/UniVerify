@@ -7,23 +7,35 @@ import {
   Grid,
   Paper,
   Stack,
-  Tab,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Tabs,
   TextField,
   Typography
 } from '@mui/material';
+import { Navigate, useParams } from 'react-router-dom';
 import { adminApi, apiErrorMessage } from '../api/client';
 import AuditLogPanel from '../components/admin/AuditLogPanel';
 import InstitutionsPanel from '../components/admin/InstitutionsPanel';
 import UsersPanel from '../components/admin/UsersPanel';
 import type { Credential } from '../api/types';
 
-type AdminTab = 'credentials' | 'institutions' | 'users' | 'audit';
+const SECTIONS = ['credentials', 'institutions', 'users', 'audit'] as const;
+
+type AdminSection = (typeof SECTIONS)[number];
+
+const SECTION_TITLES: Record<AdminSection, string> = {
+  credentials: 'Credentials',
+  institutions: 'Institutions',
+  users: 'Users',
+  audit: 'Audit log'
+};
+
+function isSection(value?: string): value is AdminSection {
+  return SECTIONS.includes(value as AdminSection);
+}
 
 const EMPTY_FORM = {
   studentName: '',
@@ -35,7 +47,8 @@ const EMPTY_FORM = {
 };
 
 export default function AdminPage() {
-  const [tab, setTab] = useState<AdminTab>('credentials');
+  const { section } = useParams<{ section?: string }>();
+  const tab: AdminSection = isSection(section) ? section : 'credentials';
   const [credentials, setCredentials] = useState<Credential[]>([]);
   const [search, setSearch] = useState('');
   const [form, setForm] = useState(EMPTY_FORM);
@@ -111,16 +124,13 @@ export default function AdminPage() {
     />
   );
 
+  if (section && !isSection(section)) {
+    return <Navigate to="/admin/credentials" replace />;
+  }
+
   return (
     <Stack spacing={3}>
-      <Typography variant="h4">Administration</Typography>
-
-      <Tabs value={tab} onChange={(_event, value: AdminTab) => setTab(value)}>
-        <Tab value="credentials" label="Credentials" />
-        <Tab value="institutions" label="Institutions" />
-        <Tab value="users" label="Users" />
-        <Tab value="audit" label="Audit log" />
-      </Tabs>
+      <Typography variant="h4">{SECTION_TITLES[tab]}</Typography>
 
       {tab === 'institutions' && <InstitutionsPanel />}
       {tab === 'users' && <UsersPanel />}
