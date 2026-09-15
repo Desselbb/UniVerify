@@ -43,6 +43,19 @@ router.post('/credentials/:hash/revoke',
 );
 
 router.get('/users', adminController.listUsers);
+
+router.post('/users',
+  [
+    body('email').isEmail().normalizeEmail(),
+    body('password').isLength({ min: 8 }),
+    body('fullName').notEmpty(),
+    body('role').isIn(['graduate', 'university_admin', 'verifier', 'system_admin']),
+    body('institutionId').optional({ nullable: true }).isInt({ min: 1 }).toInt()
+  ],
+  validate,
+  adminController.createUser
+);
+
 router.get('/audit-logs', adminController.listAuditLogs);
 
 module.exports = router;

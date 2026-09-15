@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Link,
-  MenuItem,
   Paper,
   Stack,
   TextField,
@@ -14,15 +13,12 @@ import {
 import { apiErrorMessage } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
 
-type RegisterRole = 'graduate' | 'university_admin';
-
 export default function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState<RegisterRole>('graduate');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -31,8 +27,8 @@ export default function RegisterPage() {
     setSubmitting(true);
     setError(null);
     try {
-      await register({ fullName, email, password, role });
-      navigate(role === 'graduate' ? '/graduate' : '/admin');
+      await register({ fullName, email, password });
+      navigate('/graduate');
     } catch (err) {
       setError(apiErrorMessage(err, 'Registration failed'));
     } finally {
@@ -44,7 +40,10 @@ export default function RegisterPage() {
     <Box sx={{ maxWidth: 420, mx: 'auto' }}>
       <Paper sx={{ p: 4 }}>
         <Typography variant="h5" gutterBottom>
-          Create an account
+          Create a graduate account
+        </Typography>
+        <Typography variant="body2" color="text.secondary" gutterBottom>
+          Staff accounts are created by your institution&apos;s administrator.
         </Typography>
         <Stack component="form" spacing={2} onSubmit={handleSubmit}>
           <TextField
@@ -70,15 +69,6 @@ export default function RegisterPage() {
             helperText="At least 8 characters"
             required
           />
-          <TextField
-            select
-            label="Account type"
-            value={role}
-            onChange={(event) => setRole(event.target.value as RegisterRole)}
-          >
-            <MenuItem value="graduate">Graduate</MenuItem>
-            <MenuItem value="university_admin">University administrator</MenuItem>
-          </TextField>
           {error && <Alert severity="error">{error}</Alert>}
           <Button type="submit" variant="contained" disabled={submitting}>
             Create account

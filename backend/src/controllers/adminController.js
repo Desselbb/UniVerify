@@ -180,6 +180,55 @@ async function listUsers(req, res, next) {
   }
 }
 
+async function createUser(req, res, next) {
+  try {
+    const { email, password, fullName, role } = req.body;
+
+    if (req.user.role !== 'system_admin' && role === 'system_admin') {
+      throw new ApiError(403, 'Only a system administrator can create system administrators');
+    }
+
+    const institutionId = req.user.role === 'system_admin'
+      ? req.body.institutionId ?? null
+      : req.user.institutionId;
+
+    if (role !== 'system_admin' && !institutionId) {
+      throw new ApiError(400, 'institutionId is required');
+    }
+    if (institutionId) {
+      const institution = await Institution.findByPk(institutionId);
+      if (!institution || !institution.isActive) {
+        throw new ApiError(400, 'Institution not found or inactive');
+      }
+    }
+
+    const existing = await User.findOne({ where: { email } });
+    if (existing) {
+      throw new ApiError(409, 'Email already registered');
+    }
+
+    const user = await User.create({
+      email,
+      passwordHash: password,
+      fullName,
+      role,
+      institutionId,
+      emailVerified: true
+    });
+
+    await audit.record('user_created', {
+      req,
+      entityType: 'user',
+      entityId: user.id,
+      metadata: { role, institutionId }
+    });
+
+    res.status(201).json({ user });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function listAuditLogs(req, res, next) {
   try {
     const limit = Math.min(parseInt(req.query.pageSize, 10) || 50, 200);
@@ -197,5 +246,6 @@ module.exports = {
   listCredentials,
   revokeCredential,
   listUsers,
+  createUser,
   listAuditLogs
 };

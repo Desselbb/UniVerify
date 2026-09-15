@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const speakeasy = require('speakeasy');
 const qrcode = require('qrcode');
-const { User } = require('../models');
+const { User, Institution } = require('../models');
 const { ApiError } = require('../middleware/errorHandler');
 const audit = require('../services/auditService');
 const { logger } = require('../utils/logger');
@@ -76,19 +76,28 @@ async function login(req, res, next) {
 
 async function register(req, res, next) {
   try {
-    const { email, password, fullName, role, institutionId } = req.body;
+    const { email, password, fullName, institutionId } = req.body;
 
     const existing = await User.findOne({ where: { email } });
     if (existing) {
       throw new ApiError(409, 'Email already registered');
     }
 
+    let affiliation = null;
+    if (institutionId) {
+      const institution = await Institution.findByPk(institutionId);
+      if (!institution || !institution.isActive) {
+        throw new ApiError(400, 'Institution not found or inactive');
+      }
+      affiliation = institution.id;
+    }
+
     const user = await User.create({
       email,
       passwordHash: password,
       fullName,
-      role,
-      institutionId: institutionId ?? null,
+      role: 'graduate',
+      institutionId: affiliation,
       emailVerificationToken: crypto.randomBytes(32).toString('hex')
     });
 

@@ -17,12 +17,15 @@ router.post('/login',
   authController.login
 );
 
+// Self-service registration only ever creates graduates; staff accounts are created
+// by an administrator through POST /api/admin/users.
 router.post('/register',
+  rateLimit('register', { max: 10, windowMs: 3600000 }),
   [
     body('email').isEmail().normalizeEmail(),
     body('password').isLength({ min: 8 }),
     body('fullName').notEmpty(),
-    body('role').isIn(['graduate', 'university_admin'])
+    body('institutionId').optional({ nullable: true }).isInt({ min: 1 }).toInt()
   ],
   validate,
   authController.register

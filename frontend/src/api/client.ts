@@ -44,7 +44,6 @@ export interface RegisterInput {
   email: string;
   password: string;
   fullName: string;
-  role: Extract<Role, 'graduate' | 'university_admin'>;
   institutionId?: number;
 }
 
@@ -143,6 +142,16 @@ export const adminApi = {
   async listUsers() {
     const { data } = await api.get<{ users: User[] }>('/admin/users');
     return data.users;
+  },
+  async createUser(input: {
+    email: string;
+    password: string;
+    fullName: string;
+    role: Role;
+    institutionId?: number;
+  }) {
+    const { data } = await api.post<{ user: User }>('/admin/users', input);
+    return data.user;
   },
   async listAuditLogs(pageSize = 50) {
     const { data } = await api.get<{ logs: AuditLogEntry[] }>('/admin/audit-logs', { params: { pageSize } });
