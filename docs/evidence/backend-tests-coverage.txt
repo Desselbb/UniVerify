@@ -1,0 +1,561 @@
+$ npx jest --runInBand --coverage   # all suites incl. integration
+PASS tests/integration/api.int.test.js (6.574 s)
+  ● Console
+
+    console.log
+      ◇ injected env (10) from .env.test // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+
+      at _log (node_modules/dotenv/lib/main.js:131:11)
+
+    console.log
+      ◇ injected env (12) from .env // tip: ⌘ override existing { override: true }
+
+      at _log (node_modules/dotenv/lib/main.js:131:11)
+
+    console.log
+      ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+
+      at _log (node_modules/dotenv/lib/main.js:131:11)
+
+    console.log
+      [32minfo[39m: Connected to blockchain node (chainId 31337) {"service":"univerify-backend","timestamp":"2026-09-23T04:31:25.464Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: CONTRACT_ADDRESS is not configured; on-chain calls are disabled {"service":"univerify-backend","timestamp":"2026-09-23T04:31:25.489Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: Deployed CredentialRegistry at 0x99bbA657f2BbC93c02D617f8bA121cB8Fc104Acf {"service":"univerify-backend","timestamp":"2026-09-23T04:31:26.688Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: On-chain state synchronised {"service":"univerify-backend","timestamp":"2026-09-23T04:31:28.729Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.739Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.754Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/health {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.764Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.769Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credentials {"service":"univerify-backend","timestamp":"2026-09-23T04:31:28.775Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.779Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Validation failed {"service":"univerify-backend","timestamp":"2026-09-23T04:31:28.780Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/register {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.783Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.793Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Missing or malformed Authorization header {"service":"univerify-backend","timestamp":"2026-09-23T04:31:28.794Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.797Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid or expired token {"service":"univerify-backend","timestamp":"2026-09-23T04:31:28.799Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.806Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Insufficient permissions {"service":"univerify-backend","timestamp":"2026-09-23T04:31:28.809Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/graduate/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.811Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Insufficient permissions {"service":"univerify-backend","timestamp":"2026-09-23T04:31:28.813Z","url":"/api/graduate/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:28.816Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.844Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Credential already issued {"service":"univerify-backend","timestamp":"2026-09-23T04:31:29.853Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.856Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Validation failed {"service":"univerify-backend","timestamp":"2026-09-23T04:31:29.858Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.861Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/verify/0x4fb3731c0e161dcf1b3e206891cb74ec538e0d7090db723f4d67a308fc4c584e {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.868Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/verify/0xabababababababababababababababababababababababababababababababab {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.879Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/verify/not-a-hash {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.886Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credential hash {"service":"univerify-backend","timestamp":"2026-09-23T04:31:29.887Z","url":"/api/verify/not-a-hash"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/verify/file {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.893Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/verify/file {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.903Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/verify/0x4fb3731c0e161dcf1b3e206891cb74ec538e0d7090db723f4d67a308fc4c584e/certificate {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.910Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/graduate/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.925Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/credentials/0x4fb3731c0e161dcf1b3e206891cb74ec538e0d7090db723f4d67a308fc4c584e/revoke {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:29.933Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/verify/0x4fb3731c0e161dcf1b3e206891cb74ec538e0d7090db723f4d67a308fc4c584e {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:30.957Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/credentials/0x4fb3731c0e161dcf1b3e206891cb74ec538e0d7090db723f4d67a308fc4c584e/revoke {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:30.964Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Insufficient permissions {"service":"univerify-backend","timestamp":"2026-09-23T04:31:30.967Z","url":"/api/admin/credentials/0x4fb3731c0e161dcf1b3e206891cb74ec538e0d7090db723f4d67a308fc4c584e/revoke"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/audit-logs {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:30.969Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/integration/security.int.test.js
+  ● Console
+
+    console.log
+      ◇ injected env (10) from .env.test // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+
+      at _log (node_modules/dotenv/lib/main.js:131:11)
+
+    console.log
+      ◇ injected env (12) from .env // tip: ⌘ enable debugging { debug: true }
+
+      at _log (node_modules/dotenv/lib/main.js:131:11)
+
+    console.log
+      ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+
+      at _log (node_modules/dotenv/lib/main.js:131:11)
+
+    console.log
+      [32minfo[39m: Connected to blockchain node (chainId 31337) {"service":"univerify-backend","timestamp":"2026-09-23T04:31:31.418Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: CONTRACT_ADDRESS is not configured; on-chain calls are disabled {"service":"univerify-backend","timestamp":"2026-09-23T04:31:31.442Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: Deployed CredentialRegistry at 0x36C02dA8a0983159322a80FFE9F24b1acfF8B570 {"service":"univerify-backend","timestamp":"2026-09-23T04:31:32.613Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: On-chain state synchronised {"service":"univerify-backend","timestamp":"2026-09-23T04:31:34.680Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:34.689Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:34.703Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/verify/0x'%20OR%201=1-- {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:34.713Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credential hash {"service":"univerify-backend","timestamp":"2026-09-23T04:31:34.714Z","url":"/api/verify/0x'%20OR%201=1--"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:34.717Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Validation failed {"service":"univerify-backend","timestamp":"2026-09-23T04:31:34.719Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:34.721Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/verify/0xe7e1a61ae74c0825666066432085cccc314d09ff2b7dbc706d0f342da996047e {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.753Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.764Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid or expired token {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.765Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.768Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid or expired token {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.768Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.772Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid or expired token {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.773Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/credentials {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.776Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid or expired token {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.777Z","url":"/api/admin/credentials"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/credentials/0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd/revoke {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.783Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Not authorized for this institution {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.787Z","url":"/api/admin/credentials/0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd/revoke"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/users {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.794Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/admin/users {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.805Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Only a system administrator can create system administrators {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.807Z","url":"/api/admin/users"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.810Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/password/reset {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.819Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: Password reset requested {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.822Z","token":"d85887148471e43ca55d4cd2f2e7bbd5bd0e393c2f7ea6ea0e403849891dba23","userId":1}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/password/reset {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.825Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/admin/users {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.828Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/verify/file {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.834Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [31merror[39m: Invalid file type. Only PDF, PNG, and JPG are allowed. {"service":"univerify-backend","stack":"Error: Invalid file type. Only PDF, PNG, and JPG are allowed.\n    at fileFilter (/home/ubuntu/univerify/backend/src/routes/verification.js:16:10)\n    at wrappedFileFilter (/home/ubuntu/univerify/backend/node_modules/multer/index.js:45:7)\n    at Multipart.<anonymous> (/home/ubuntu/univerify/backend/node_modules/multer/lib/make-middleware.js:193:7)\n    at Multipart.emit (node:events:518:28)\n    at HeaderParser.cb (/home/ubuntu/univerify/backend/node_modules/busboy/lib/types/multipart.js:358:14)\n    at HeaderParser.push (/home/ubuntu/univerify/backend/node_modules/busboy/lib/types/multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (/home/ubuntu/univerify/backend/node_modules/busboy/lib/types/multipart.js:394:37)\n    at feed (/home/ubuntu/univerify/backend/node_modules/streamsearch/lib/sbmh.js:219:14)\n    at SBMH.push (/home/ubuntu/univerify/backend/node_modules/streamsearch/lib/sbmh.js:104:16)\n    at Multipart._write (/home/ubuntu/univerify/backend/node_modules/busboy/lib/types/multipart.js:567:19)\n    at writeOrBuffer (node:internal/streams/writable:572:12)\n    at _write (node:internal/streams/writable:501:10)\n    at Multipart.Writable.write (node:internal/streams/writable:510:10)\n    at IncomingMessage.ondata (node:internal/streams/readable:1009:22)\n    at IncomingMessage.emit (node:events:518:28)\n    at IncomingMessage.Readable.read (node:internal/streams/readable:782:10)\n    at flow (node:internal/streams/readable:1283:53)\n    at resume_ (node:internal/streams/readable:1262:3)\n    at processTicksAndRejections (node:internal/process/task_queues:82:21)","timestamp":"2026-09-23T04:31:35.837Z","url":"/api/verify/file"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/verify/file {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.844Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [31merror[39m: File too large {"service":"univerify-backend","stack":"MulterError: File too large\n    at abortWithCode (/home/ubuntu/univerify/backend/node_modules/multer/lib/make-middleware.js:107:22)\n    at FileStream.<anonymous> (/home/ubuntu/univerify/backend/node_modules/multer/lib/make-middleware.js:221:11)\n    at FileStream.emit (node:events:518:28)\n    at SBMH.ssCb [as _cb] (/home/ubuntu/univerify/backend/node_modules/busboy/lib/types/multipart.js:479:32)\n    at feed (/home/ubuntu/univerify/backend/node_modules/streamsearch/lib/sbmh.js:248:10)\n    at SBMH.push (/home/ubuntu/univerify/backend/node_modules/streamsearch/lib/sbmh.js:104:16)\n    at Multipart._write (/home/ubuntu/univerify/backend/node_modules/busboy/lib/types/multipart.js:567:19)\n    at writeOrBuffer (node:internal/streams/writable:572:12)\n    at _write (node:internal/streams/writable:501:10)\n    at Multipart.Writable.write (node:internal/streams/writable:510:10)\n    at IncomingMessage.ondata (node:internal/streams/readable:1009:22)\n    at IncomingMessage.emit (node:events:518:28)\n    at addChunk (node:internal/streams/readable:561:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n    at IncomingMessage.Readable.push (node:internal/streams/readable:392:5)\n    at HTTPParser.parserOnBody (node:_http_common:130:24)\n    at HTTPParser.callbackTrampoline (node:internal/async_hooks:130:17)","timestamp":"2026-09-23T04:31:35.859Z","url":"/api/verify/file"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: GET /api/health {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.863Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.867Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credentials {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.869Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.870Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credentials {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.872Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.873Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credentials {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.875Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.877Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credentials {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.878Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.880Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credentials {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.881Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.883Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [33mwarn[39m: Invalid credentials {"service":"univerify-backend","timestamp":"2026-09-23T04:31:35.884Z","url":"/api/auth/login"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.886Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.887Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.889Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.891Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.893Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.894Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.896Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      [32minfo[39m: POST /api/auth/login {"ip":"::ffff:127.0.0.1","service":"univerify-backend","timestamp":"2026-09-23T04:31:35.898Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/adminUsers.test.js
+PASS tests/registration.test.js
+PASS tests/verificationPolicy.test.js
+PASS tests/hashService.test.js
+----------------------------|---------|----------|---------|---------|----------------------------------------------------
+File                        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                  
+----------------------------|---------|----------|---------|---------|----------------------------------------------------
+All files                   |   70.32 |       56 |   68.42 |   70.95 |                                                    
+ src                        |   39.24 |     23.8 |    9.09 |   41.33 |                                                    
+  app.js                    |     100 |     62.5 |     100 |     100 | 22-29                                              
+  server.js                 |       0 |        0 |       0 |       0 | 1-84                                               
+ src/config                 |   89.74 |       50 |     100 |   89.74 |                                                    
+  blockchain.js             |   88.57 |       50 |     100 |   88.57 | 27,37,44,51                                        
+  database.js               |     100 |       50 |     100 |     100 | 3-15                                               
+ src/controllers            |   61.78 |    59.86 |   55.17 |   62.37 |                                                    
+  adminController.js        |   74.76 |    73.52 |   77.77 |   74.76 | 15-47,58,63,83,120,133,144,150,156,179,196,201,238 
+  authController.js         |   47.96 |    46.66 |   33.33 |   49.16 | 30,33,40-41,49-60,83,130-233                       
+  graduateController.js     |   41.17 |        0 |   33.33 |   41.17 | 6-7,19-33                                          
+  verificationController.js |   71.64 |    56.66 |      80 |   71.64 | 19,29,32,70,75,92-108,116,121,146                  
+ src/middleware             |   92.85 |    81.39 |   88.88 |   92.85 |                                                    
+  auth.js                   |   89.28 |       90 |     100 |   89.28 | 18,36-37                                           
+  errorHandler.js           |    90.9 |       90 |   66.66 |    90.9 | 28                                                 
+  rateLimit.js              |     100 |    54.54 |     100 |     100 | 13-16                                              
+  validate.js               |     100 |      100 |     100 |     100 |                                                    
+ src/models                 |   96.66 |       40 |     100 |   96.66 |                                                    
+  AuditLog.js               |     100 |      100 |     100 |     100 |                                                    
+  BatchJob.js               |     100 |      100 |     100 |     100 |                                                    
+  Credential.js             |     100 |      100 |     100 |     100 |                                                    
+  Institution.js            |     100 |      100 |     100 |     100 |                                                    
+  User.js                   |    90.9 |     37.5 |     100 |    90.9 | 124-125                                            
+  VerificationRequest.js    |     100 |      100 |     100 |     100 |                                                    
+  index.js                  |     100 |       50 |     100 |     100 | 17                                                 
+ src/routes                 |   96.15 |     62.5 |      75 |    96.1 |                                                    
+  admin.js                  |     100 |      100 |     100 |     100 |                                                    
+  auth.js                   |   94.73 |      100 |       0 |   94.73 | 43                                                 
+  graduate.js               |     100 |      100 |     100 |     100 |                                                    
+  health.js                 |   88.88 |       50 |     100 |   88.23 | 13,20                                              
+  verification.js           |     100 |       75 |     100 |     100 | 9                                                  
+ src/services               |   65.13 |    44.44 |   73.68 |   65.13 |                                                    
+  auditService.js           |   66.66 |    57.89 |     100 |   66.66 | 6,20-21                                            
+  blockchainService.js      |   76.66 |    33.33 |   71.42 |   76.66 | 9-10,49-65                                         
+  bootstrapService.js       |   60.41 |    13.33 |   66.66 |   60.41 | 22-24,41-43,57-68,82,86,94-99                      
+  hashService.js            |     100 |      100 |     100 |     100 |                                                    
+  seedService.js            |       0 |        0 |       0 |       0 | 1-59                                               
+  verificationPolicy.js     |     100 |      100 |     100 |     100 |                                                    
+ src/utils                  |     100 |       75 |     100 |     100 |                                                    
+  logger.js                 |     100 |       75 |     100 |     100 | 13                                                 
+----------------------------|---------|----------|---------|---------|----------------------------------------------------
+
+Test Suites: 6 passed, 6 total
+Tests:       63 passed, 63 total
+Snapshots:   0 total
+Time:        12.003 s, estimated 13 s
+Ran all test suites.

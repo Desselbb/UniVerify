@@ -7,11 +7,17 @@ const limiters = new Map();
  * limiter instance (and therefore a single counter store) is shared by all
  * routes using the same name.
  */
+function envOverride(name) {
+  const key = `RATE_LIMIT_${name.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}_MAX`;
+  const value = parseInt(process.env[key], 10);
+  return Number.isFinite(value) && value > 0 ? value : null;
+}
+
 function rateLimit(name, { max = 100, windowMs = 3600000 } = {}) {
   if (!limiters.has(name)) {
     limiters.set(name, expressRateLimit({
       windowMs,
-      max,
+      max: envOverride(name) ?? max,
       standardHeaders: true,
       legacyHeaders: false,
       message: { error: 'Too many requests, please try again later.' }

@@ -28,6 +28,7 @@ module.exports = [
       globals: {
         describe: 'readonly',
         it: 'readonly',
+        test: 'readonly',
         expect: 'readonly',
         beforeAll: 'readonly',
         afterAll: 'readonly',
