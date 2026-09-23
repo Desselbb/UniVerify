@@ -1,0 +1,42 @@
+$ CI=true npx react-scripts test --coverage --watchAll=false
+PASS src/pages/VerifyPage.test.tsx
+PASS src/pages/LoginPage.test.tsx
+PASS src/components/Layout.test.tsx
+PASS src/App.test.tsx
+PASS src/components/VerificationResultCard.test.tsx
+-----------------------------|---------|----------|---------|---------|------------------------------------
+File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                  
+-----------------------------|---------|----------|---------|---------|------------------------------------
+All files                    |   24.26 |    25.84 |    20.3 |   24.48 |                                    
+ src                         |    9.52 |        0 |      25 |    9.52 |                                    
+  App.tsx                    |      20 |        0 |      50 |      20 | 19-30                              
+  index.tsx                  |       0 |      100 |     100 |       0 | 10-22                              
+  reportWebVitals.ts         |       0 |        0 |       0 |       0 | 3-10                               
+ src/api                     |    12.5 |     6.25 |       4 |   12.69 |                                    
+  client.ts                  |    12.5 |     6.25 |       4 |   12.69 | 21-34,52-84,90-103,121-158,164-169 
+  types.ts                   |       0 |        0 |       0 |       0 |                                    
+ src/auth                    |      50 |       20 |      40 |      50 |                                    
+  AuthContext.tsx            |      50 |       20 |      40 |      50 | 26-30,34-42,46-48,52,56-57,71      
+ src/components              |   86.66 |      100 |   66.66 |   89.65 |                                    
+  Layout.tsx                 |   83.33 |      100 |      60 |   86.95 | 70,101-137                         
+  VerificationResultCard.tsx |     100 |      100 |     100 |     100 |                                    
+ src/components/admin        |    1.19 |        0 |       0 |    1.25 |                                    
+  AuditLogPanel.tsx          |       0 |        0 |       0 |       0 | 17-48                              
+  InstitutionsPanel.tsx      |    3.03 |        0 |       0 |    3.33 | 25-127                             
+  UsersPanel.tsx             |       0 |        0 |       0 |       0 | 25-144                             
+ src/pages                   |   25.47 |    22.68 |   24.07 |   25.23 |                                    
+  AccountPage.tsx            |       0 |        0 |       0 |       0 | 17-123                             
+  AdminPage.tsx              |    5.45 |        0 |       0 |    5.55 | 37,50-211                          
+  ForgotPasswordPage.tsx     |       0 |        0 |       0 |       0 | 7-37                               
+  GraduatePage.tsx           |       0 |        0 |       0 |       0 | 21-81                              
+  LoginPage.tsx              |   95.65 |      100 |      80 |   95.65 | 60                                 
+  RegisterPage.tsx           |       0 |        0 |       0 |       0 | 17-67                              
+  ResetPasswordPage.tsx      |       0 |        0 |       0 |       0 | 7-51                               
+  VerifyPage.tsx             |   96.66 |    86.36 |     100 |   96.55 | 49                                 
+-----------------------------|---------|----------|---------|---------|------------------------------------
+
+Test Suites: 5 passed, 5 total
+Tests:       20 passed, 20 total
+Snapshots:   0 total
+Time:        3.155 s
+Ran all test suites.

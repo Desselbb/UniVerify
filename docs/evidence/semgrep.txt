@@ -1,0 +1,45 @@
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 123 files tracked by git with 121 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      36     123          Community     121                                                                
+  js               68      38                                                                                           
+  ts               74      26                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 1 (1 blocking)
+ • Rules run: 110
+ • Targets scanned: 123
+ • Parsed lines: ~100.0%
+ • Scan skipped: 
+   ◦ Files matching .semgrepignore patterns: 7
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 110 rules on 123 files: 1 finding.
+                  
+                  
+┌────────────────┐
+│ 1 Code Finding │
+└────────────────┘
+                                  
+    backend/src/config/database.js
+    ❯❱ problem-based-packs.insecure-transport.js-node.bypass-tls-verification.bypass-tls-verification
+          ❰❰ Blocking ❱❱
+          Checks for setting the environment variable NODE_TLS_REJECT_UNAUTHORIZED to 0, which disables TLS   
+          verification. This should only be used for debugging purposes. Setting the option rejectUnauthorized
+          to false bypasses verification against the list of trusted CAs, which also leads to insecure        
+          transport. These options lead to vulnerability to MTM attacks, and should not be used.              
+          Details: https://sg.run/9oxr                                                                        
+                                                                                                              
+           12┆ ? { dialectOptions: { ssl: { require: true, rejectUnauthorized: false } } }
+

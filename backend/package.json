@@ -7,7 +7,11 @@
     "dev": "nodemon src/server.js",
     "migrate": "node scripts/migrate.js",
     "seed": "node scripts/seed.js",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --testPathIgnorePatterns tests/integration",
+    "test:coverage": "jest --runInBand --testPathIgnorePatterns tests/integration --coverage",
+    "test:integration": "jest --runInBand --testMatch '**/tests/integration/**/*.int.test.js'",
+    "test:integration:coverage": "jest --runInBand --testMatch '**/tests/integration/**/*.int.test.js' --coverage",
+    "bench": "node scripts/benchmark.js",
     "lint": "eslint src scripts"
   },
   "keywords": [],
@@ -44,5 +48,11 @@
     "nodemon": "^3.1.14",
     "prettier": "^3.9.6",
     "supertest": "^7.2.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
   }
 }

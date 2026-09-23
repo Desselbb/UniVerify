@@ -1,0 +1,102 @@
+{
+  "baseUrl": "http://localhost:3010/api",
+  "startedAt": "2026-09-23T04:19:36.721Z",
+  "node": "v20.18.1",
+  "platform": "linux x64",
+  "cpus": 2,
+  "durationSecondsPerScenario": 20,
+  "results": [
+    {
+      "scenario": "health check",
+      "endpoint": "GET /health",
+      "concurrency": 20,
+      "warmupSeconds": 3,
+      "measuredSeconds": 17,
+      "requests": 29206,
+      "requestsPerSecond": 1718.1,
+      "errors": 0,
+      "errorRate": 0,
+      "statusCounts": {
+        "200": 29206
+      },
+      "latencyMs": {
+        "min": 3.09,
+        "mean": 11.62,
+        "p50": 10.35,
+        "p90": 16.51,
+        "p95": 18.72,
+        "p99": 25.45,
+        "max": 54.78
+      }
+    },
+    {
+      "scenario": "public verification by hash",
+      "endpoint": "GET /verify/0x929f06d4e937e5b0f796b5735d6e37450b0fbdeb4c59363bd9095af463ca230f",
+      "concurrency": 20,
+      "warmupSeconds": 3,
+      "measuredSeconds": 16.96,
+      "requests": 9664,
+      "requestsPerSecond": 569.71,
+      "errors": 0,
+      "errorRate": 0,
+      "statusCounts": {
+        "200": 9664
+      },
+      "latencyMs": {
+        "min": 8.3,
+        "mean": 35.15,
+        "p50": 33.6,
+        "p90": 43.04,
+        "p95": 47.4,
+        "p99": 56,
+        "max": 89.95
+      }
+    },
+    {
+      "scenario": "public verification of an unknown hash",
+      "endpoint": "GET /verify/0xabababababababababababababababababababababababababababababababab",
+      "concurrency": 20,
+      "warmupSeconds": 3,
+      "measuredSeconds": 16.99,
+      "requests": 10690,
+      "requestsPerSecond": 629.08,
+      "errors": 0,
+      "errorRate": 0,
+      "statusCounts": {
+        "200": 10690
+      },
+      "latencyMs": {
+        "min": 4.08,
+        "mean": 31.79,
+        "p50": 29.94,
+        "p90": 39.79,
+        "p95": 43.99,
+        "p99": 53.12,
+        "max": 78.27
+      }
+    },
+    {
+      "scenario": "login (bcrypt work factor from env)",
+      "endpoint": "POST /auth/login",
+      "concurrency": 20,
+      "warmupSeconds": 3,
+      "measuredSeconds": 16.99,
+      "requests": 7908,
+      "requestsPerSecond": 465.56,
+      "errors": 0,
+      "errorRate": 0,
+      "statusCounts": {
+        "200": 7908
+      },
+      "latencyMs": {
+        "min": 21.11,
+        "mean": 42.95,
+        "p50": 42.2,
+        "p90": 52.74,
+        "p95": 56.62,
+        "p99": 66.36,
+        "max": 83.18
+      }
+    }
+  ]
+}
